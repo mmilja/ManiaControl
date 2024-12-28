@@ -1,3 +1,7 @@
+###v0.259###
+#Changes
+- Uses github for core autoupdates
+
 ###v0.258###
 #Changes
 - MC compatibility with MX v2 api
