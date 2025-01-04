@@ -67,6 +67,8 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 	/** @var ManiaControl $maniaControl */
 	private $maniaControl = null;
 
+	/** @var Array(Map) $searchedMapList */
+	private $searchedMapList = null;
 	/**
 	 * Construct a new map list instance
 	 *
@@ -140,11 +142,15 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 
 		// Get Maps
 		if (!is_array($mapList)) {
+			$this->searchedMapList = null;
 			$mapList = $this->maniaControl->getMapManager()->getMaps();
+		} else {
+			//Store the mapList for paging
+			$this->searchedMapList = $mapList; 
 		}
+		$totalMapsCount = count($mapList);
 		$mapList = array_slice($mapList, $mapsBeginIndex, self::MAX_PAGES_PER_CHUNK * self::MAX_MAPS_PER_PAGE);
 
-		$totalMapsCount = $this->maniaControl->getMapManager()->getMapsCount();
 		$pagesCount     = ceil($totalMapsCount / self::MAX_MAPS_PER_PAGE);
 
 		// Create ManiaLink
@@ -655,7 +661,7 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 				if (substr($actionId, 0, strlen(self::ACTION_PAGING_CHUNKS)) === self::ACTION_PAGING_CHUNKS) {
 					// Paging chunks
 					$neededPage = (int) substr($actionId, strlen(self::ACTION_PAGING_CHUNKS));
-					$this->showMapList($player, null, $neededPage - 1);
+					$this->showMapList($player, $this->searchedMapList, $neededPage - 1);
 				}
 				break;
 		}

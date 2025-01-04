@@ -1,3 +1,8 @@
+###v0.260###
+#Changes
+- Improve paging in map manager, for when there are more than 3 pages of results
+- Change implemnented by Nactik
+
 ###v0.259###
 #Changes
 - Uses github for core autoupdates
